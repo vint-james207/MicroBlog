@@ -3,7 +3,7 @@
 Hello {{name}}!
 <br>
 <br>
-<form>
+<form action="/message" method="post">
 <input type="text" name="message" placeholder="Write a message"/>
 <button type="submit">Submit</button>
 </form>
@@ -13,6 +13,7 @@ Messages by {{name}}:
 <ol>
 {{#messages}}
     <li>{{message}}</li>
+{{/messages}}
 </ol>
 </body>
 </html>

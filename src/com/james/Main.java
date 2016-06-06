@@ -22,8 +22,8 @@ public class Main {
                     if(user == null) {
                         return new ModelAndView(map, "login.html");
                     } else {
+                        map.put("messages", user.messageList);
                         map.put("name", user.name);
-                        map.put("password", user.password);
                         return new ModelAndView(map, "index.html");
                     }
                 }),
@@ -33,7 +33,7 @@ public class Main {
         Spark.post(
                 "/login",
                 ((request, response) -> {
-                    String name = request.queryParams("name");
+                    String name = request.queryParams("username");
                     String password = request.queryParams("password");
                     user = new User(name, password);
                     response.redirect("/");
@@ -44,8 +44,11 @@ public class Main {
         Spark.post(
                 "/message",
                 ((request, response) -> {
-
-                }))
-        )
+                    String message = request.queryParams("message");
+                    user.messageList.add(new Message(message));
+                    response.redirect("/");
+                    return "";
+                })
+        );
     }
 }
