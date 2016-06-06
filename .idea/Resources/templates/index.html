@@ -1,0 +1,18 @@
+<html>
+<body>
+Hello {{name}}!
+<br>
+<br>
+<form>
+<input type="text" name="message" placeholder="Write a message"/>
+<button type="submit">Submit</button>
+</form>
+<br>
+<br>
+Messages by {{name}}:
+<ol>
+{{#messages}}
+    <li>{{message}}</li>
+</ol>
+</body>
+</html>
