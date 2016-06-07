@@ -9,7 +9,7 @@ import java.util.HashMap;
 public class Main {
 
     static User user;
-    static HashMap savedUser = new HashMap();
+    static HashMap<String, User> savedUser = new HashMap<>();
 
     public static void main(String[] args) {
 
@@ -35,9 +35,16 @@ public class Main {
                 ((request, response) -> {
                     String name = request.queryParams("username");
                     String password = request.queryParams("password");
-                    user = new User(name, password);
-                    response.redirect("/");
-                    return "";
+                    user = savedUser.get(name);
+                    if (user == null) {
+                        user = new User(name, password);
+                        savedUser.put(name, user);
+                    }
+                    if (!password.equals(user.password)) {
+                        user = null;
+                    }
+                        response.redirect("/");
+                        return "";
                 })
         );
 
@@ -49,6 +56,15 @@ public class Main {
                     response.redirect("/");
                     return "";
                 })
+        );
+
+        Spark.post(
+                "/logout",
+                (request, response) -> {
+                    user = null;
+                    response.redirect("/");
+                    return "";
+                }
         );
     }
 }
