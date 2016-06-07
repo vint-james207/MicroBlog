@@ -1,0 +1,39 @@
+<html>
+<head>
+    <link rel="stylesheet" href="style2.css" type="text/css"/>
+</head>
+<body>
+Hello {{name}}!
+<br>
+<br>
+<form action="/message" method="post">
+<input type="text" name="message" placeholder="Write a message"/>
+<button type="submit">Submit</button>
+</form>
+<br>
+<form action="/delete-message" method="post">
+<input type="number" name="ID" placeholder="#"/>
+<button type="submit">Delete Message</button>
+</form>
+<br>
+<br>
+Messages by {{name}}:
+<ol>
+{{#messages}}
+    <li>{{message}}</li>
+{{/messages}}
+</ol>
+<br>
+<form action="/edit-message" method="post">
+<input type="number" name="messageID" placeholder="#"/>
+    <input type="text" name="newMessage">
+<button type="submit">Edit Message</button>
+
+</form>
+<br>
+<br>
+<form action="/logout" method="post">
+    <button type="submit">Logout</button>
+</form>
+</body>
+</html>

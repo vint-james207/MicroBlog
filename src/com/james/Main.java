@@ -12,6 +12,7 @@ public class Main {
     static HashMap<String, User> savedUsers = new HashMap<>();
 
     public static void main(String[] args) {
+
         Spark.staticFileLocation("Public");
 
         Spark.init();
@@ -64,6 +65,33 @@ public class Main {
                     user.messageList.add(new Message(message));
                     response.redirect("/");
                     return "";
+                })
+        );
+
+        Spark.post(
+                "/delete-message",
+                ((request, response) -> {
+                    Session session = request.session();
+                    String name = session.attribute("username");
+                    User user = savedUsers.get(name);
+                    int id = Integer.valueOf(request.queryParams("ID"));
+                    user.messageList.remove(id - 1);
+                    response.redirect("/");
+                    return "";
+                })
+        );
+
+        Spark.post(
+                "/edit-message",
+                ((request, response) -> {
+                    Session session = request.session();
+                    String name = session.attribute("username");
+                    User user = savedUsers.get(name);
+                    int id = Integer.valueOf(request.queryParams("messageID"));
+                    user.messageList.get(id - 1).message = request.queryParams("newMessage");
+                    response.redirect("/");
+                    return "";
+
                 })
         );
 
